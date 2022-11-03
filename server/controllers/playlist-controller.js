@@ -64,13 +64,36 @@ deletePlaylist = async (req, res) => {
                 if (user._id == req.userId) {
                     console.log("correct user!");
                     Playlist.findOneAndDelete({ _id: req.params.id }, () => {
-                        return res.status(200).json({});
-                    }).catch(err => console.log(err))
-                }
-                else {
+                        User.findById({ _id: user._id }, (err, user) => {
+                            if (err) {
+                                return res.status(404).json({
+                                    errorMessage: "Playlist doesn't belong to a user!",
+                                    success: false
+                                })
+                            }
+                            let index = user.playlists.indexOf(req.params.id);
+                            user.playlists.splice(index, 1);
+                            user
+                                .save()
+                                .then(() => {
+                                    return res.status(200).json({
+                                        message: "Playlist Deleted!",
+                                        success: true
+                                    })
+                                })
+                                .catch(error => {
+                                    return res.status(400).json({
+                                        errorMessage: 'Playlist Not Deleted!',
+                                        success: false
+                                    })
+                                })
+                        })
+                    }).catch(err => console.log(err));
+                } else {
                     console.log("incorrect user!");
                     return res.status(400).json({ 
-                        errorMessage: "authentication error" 
+                        errorMessage: "authentication error",
+                        success: false
                     });
                 }
             });
