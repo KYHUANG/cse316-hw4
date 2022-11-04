@@ -8,7 +8,7 @@ import Fab from '@mui/material/Fab'
 import List from '@mui/material/List';
 import Typography from '@mui/material/Typography'
 /*
-    This React component lists all the top5 lists in the UI.
+    This React component lists all the playlists in the UI.
     
     @author McKilla Gorilla
 */
@@ -22,33 +22,40 @@ const HomeScreen = () => {
     function handleCreateNewList() {
         store.createNewList();
     }
+
+    let disabled = false;
+    if (store.isDeleteListModalOpen()) {
+        disabled = true;
+    }
+
     let listCard = "";
     if (store) {
-        listCard = 
-            <List sx={{ width: '90%', left: '5%', bgcolor: 'background.paper' }}>
-            {
-                store.idNamePairs.map((pair) => (
-                    <ListCard
-                        key={pair._id}
-                        idNamePair={pair}
-                        selected={false}
-                    />
-                ))
-            }
+        listCard =
+            <List sx={{ width: '90%', left: '5%', bgcolor: 'primary' }}>
+                {
+                    store.idNamePairs.map((pair) => (
+                        <ListCard
+                            key={pair._id}
+                            idNamePair={pair}
+                            selected={false}
+                        />
+                    ))
+                }
             </List>;
     }
     return (
         <div id="playlist-selector">
             <div id="list-selector-heading">
-            <Fab 
-                color="primary" 
-                aria-label="add"
-                id="add-list-button"
-                onClick={handleCreateNewList}
-            >
-                <AddIcon />
-            </Fab>
-                <Typography variant="h2">Your Lists</Typography>
+                <Fab
+                    color="primary"
+                    aria-label="add"
+                    id="add-list-button"
+                    onClick={handleCreateNewList}
+                    disabled={disabled}
+                >
+                    <AddIcon />
+                </Fab>
+                <Typography variant="h2" sx={{ pl: 2 }}>Your Lists</Typography>
             </div>
             <div id="list-selector-list">
                 {

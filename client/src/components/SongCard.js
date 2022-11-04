@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { GlobalStoreContext } from '../store'
+import IconButton from '@mui/material/IconButton'
 
 function SongCard(props) {
     const { store } = useContext(GlobalStoreContext);
@@ -70,6 +71,7 @@ function SongCard(props) {
                 className="list-card-button"
                 value={"\u2715"}
                 onClick={handleRemoveSong}
+                disabled={store.isModalOpen()}
             />
         </div>
     );
