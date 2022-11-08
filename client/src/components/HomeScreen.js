@@ -52,10 +52,11 @@ const HomeScreen = () => {
                     id="add-list-button"
                     onClick={handleCreateNewList}
                     disabled={disabled}
+                    size="medium"
                 >
                     <AddIcon />
                 </Fab>
-                <Typography variant="h2" sx={{ pl: 2 }}>Your Lists</Typography>
+                <Typography variant="h4" sx={{ pl: 2 }}>Your Lists</Typography>
             </div>
             <div id="list-selector-list">
                 {

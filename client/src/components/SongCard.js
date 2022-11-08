@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react'
 import { GlobalStoreContext } from '../store'
 import IconButton from '@mui/material/IconButton'
+import DeleteIcon from '@mui/icons-material/Delete';
 
 function SongCard(props) {
     const { store } = useContext(GlobalStoreContext);
@@ -58,21 +59,23 @@ function SongCard(props) {
             draggable="true"
             onClick={handleClick}
         >
-            {index + 1}.
-            <a
-                id={'song-' + index + '-link'}
-                className="song-link"
-                href={"https://www.youtube.com/watch?v=" + song.youTubeId}>
-                {song.title} by {song.artist}
-            </a>
-            <input
-                type="button"
+            <div>
+                {index + 1}.
+                <a
+                    id={'song-' + index + '-link'}
+                    className="song-link"
+                    href={"https://www.youtube.com/watch?v=" + song.youTubeId}>
+                    {song.title} by {song.artist}
+                </a>
+            </div>
+            <IconButton
+                onClick={(event) => { handleRemoveSong(event) }}
+                aria-label='delete'
                 id={"remove-song-" + index}
-                className="list-card-button"
-                value={"\u2715"}
-                onClick={handleRemoveSong}
                 disabled={store.isModalOpen()}
-            />
+                style={{ padding: 0, display: 'flex' }}>
+                    <DeleteIcon sx={{ fontSize: 40 }} />
+            </IconButton>
         </div>
     );
 }
